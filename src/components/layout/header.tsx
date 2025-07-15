@@ -36,7 +36,7 @@ const Header = () => {
   return (
     <header className='fixed top-0 right-0 left-0 z-50 border-b bg-white flex'>
       <Link href={'/'} className=' items-center  ml-10 flex'>
-            <img src="logo.png" alt="" className='w-50'/>
+            <img src="/logo.png" alt="" className='w-50'/>
           </Link>
       <div className='container flex h-16 items-center  px-4 justify-center'>
         <div className='flex items-center '>
@@ -78,14 +78,16 @@ const Header = () => {
       <div className='p-4 mr-4'>
         {
           isPending ? null : user ? 
-          <div>
+          
            <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant={'ghost'} className='relative h-8 w-8 rounded-full'>
                 <Avatar className='h-8 w-8 border border-slate-300 bg-gray-300'>
+                  <AvatarImage src={user?.image?.toString()} alt="image"></AvatarImage>
                   <AvatarFallback>
                     {user?.name ? user?.name.charAt(0).toUpperCase() : 'U'}
                   </AvatarFallback>
+                  
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
@@ -100,7 +102,7 @@ const Header = () => {
             </DropdownMenuItem>
             </DropdownMenuContent>
            </DropdownMenu>
-          </div>
+          
           : <Link href={'/login'}><Button>Login</Button></Link>
         }
       </div>

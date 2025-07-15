@@ -107,7 +107,7 @@ export const categoryReleations=relations(category,({many})=>({
 
 export const assetReleations=relations(asset,({one,many})=>({
 	user : one(user,{
-		fields : [asset.categoryId],
+		fields : [asset.userId],
 		references : [user.id]
 	}),
 	category:one(category,{
