@@ -50,7 +50,7 @@ const Header = () => {
             {
               !isPending && user && !isAdminUser &&(
                 <>
-                <Link href='/dashboards/orders'>
+                <Link href='/dashboards/items'>
                 <Button variant={'ghost'}><PackagePlus/> Your Assets</Button>
                 </Link>
                 <Link href='/dashboards/orders'>
