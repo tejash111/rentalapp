@@ -1,7 +1,7 @@
 "use server"
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { category, user } from "@/lib/db/schema";
+import { asset, category, user } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
@@ -105,5 +105,89 @@ export async function deleteCategoryAction(categoryId : number){
             message:'failed to delete category'
         }
         
+    }
+}
+
+export async function GetAllItemsCountAction(){
+    const session = await auth.api.getSession({
+        headers : await headers(),
+    })
+
+    if (!session?.user || session.user.role !== 'admin'){
+        throw new Error('You must be an admin to add Categories')
+    }
+
+    try {
+        const result = await db.select({count : sql<number>`count(*)`}).from(asset)
+        return result[0]?.count || 0
+    } catch (error) {
+        console.log(error);
+        return 0;
+    }
+}
+
+export async function approveItemAction(assetId: string) {
+     const session = await auth.api.getSession({
+        headers : await headers(),
+    })
+
+    if (!session?.user || session.user.role !== 'admin'){
+        throw new Error('You must be an admin to approve this data')
+    }
+
+    try {
+        await db.update(asset).set({isApproved : "approved" ,updatedAt : new Date()}).where(eq(asset.id,assetId))
+
+        revalidatePath('/admin/asset-approval')
+        return {
+            success:true
+        }
+    } catch (error) {
+        return {
+            success :false
+        }
+    }
+}
+
+export async function rejectItemAction(assetId: string) {
+     const session = await auth.api.getSession({
+        headers : await headers(),
+    })
+
+    if (!session?.user || session.user.role !== 'admin'){
+        throw new Error('You must be an admin to reject this data')
+    }
+
+    try {
+         await db.update(asset).set({isApproved : "rejected" ,updatedAt : new Date()}).where(eq(asset.id,assetId))
+         revalidatePath('/admin/asset-approval')
+         return {
+            success:true
+         }
+    } catch (error) {
+        return {
+            success :false
+        }
+    }
+}
+
+export async function getPendingItemAction() {
+     const session = await auth.api.getSession({
+        headers : await headers(),
+    })
+
+    if (!session?.user || session.user.role !== 'admin'){
+        throw new Error('You must be an admin to reject this data')
+    }
+
+    try {
+        const pendingItems= await db.select({
+            item : asset,
+            userName : user.name
+        }).from(asset).leftJoin(user,eq(asset.userId,user.id)).where(eq(asset.isApproved,"pending"))
+
+        return pendingItems;
+    } catch (error) {
+        return []
     }
 }

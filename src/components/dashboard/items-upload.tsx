@@ -8,6 +8,8 @@ import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 import { Select, SelectItem, SelectValue,SelectContent,SelectTrigger } from '../ui/select'
 import { Label } from '../ui/label'
+import { uploadItemAction } from '@/actions/dashboard-actions'
+import { toast } from 'sonner'
 
 type Category={
     id:number;
@@ -109,6 +111,7 @@ const UploadItems = ({categories} :UploadDialogProps) => {
                 xhr.onload = ()=>{
                     if (xhr.status >= 200 && xhr.status<300){
                         const response = JSON.parse(xhr.responseText)
+                        resolve(response)
                     }else{
                         reject(new Error('upload to cloudinary failed'))
                     } 
@@ -127,8 +130,30 @@ const UploadItems = ({categories} :UploadDialogProps) => {
             formData.append('image',cloudinaryResponse.secure_url)
 
             //uplaod this to db
+            const result = await uploadItemAction(formData);
+            if(result.success){
+                setOpen(false)
+                setFormState({
+                    title: '',
+                    description: '',
+                    location: '',
+                    categoryId: null,
+                    image: null
+                })
+            }else{
+                toast.error('error in  uploading data ')
+                throw new Error(result.error)
+                
+            }
 
         } catch (error) {
+            console.log(error);
+            toast.error("some error occured")
+            
+        }finally{
+            setOpen(false)
+            setIsUploading(false)
+            setUplaodProgress(0);
             
         }
     }
@@ -179,8 +204,17 @@ const UploadItems = ({categories} :UploadDialogProps) => {
                     <Label htmlFor='image'>Image</Label>
                     <Input onChange={handleFileChange} type='file' id='image' name='image' accept='image/*' />
                 </div>
+                {
+                    isUploading && uploadProgress>0 && (
+                        <div className='mb-5 w-full bg-stone-100 rounded-full h-2'>
+                            <div  className='bg-black h-2 rounded-full ' style={{width : `${uploadProgress}%`}}/>
+                            <p className='text-xs text-slate-500 m-2 text-right '>{uploadProgress}% upload</p>
+                            
+                        </div>
+                    )
+                }
                 <DialogFooter>
-                    <Button type='submit'><PackagePlus className='mr-2 h-5 w-5'/>Add Item</Button>
+                    <Button type='submit'><PackagePlus className='mr-2 h-5 w-5 mt-2'/>Add Item</Button>
                 </DialogFooter>
             </form>
         </DialogContent>

@@ -1,13 +1,24 @@
 
 
-import { getCategoriesAction } from '@/actions/dashboard-actions'
+import { getCategoriesAction, getUserItemAction } from '@/actions/dashboard-actions'
 import ItemsGrid from '@/components/dashboard/items-grid'
 import UploadItems from '@/components/dashboard/items-upload'
+import { auth } from '@/lib/auth'
+import { headers } from 'next/headers'
 
 
 const DasboardItem = async() => {
 
-  const [categories]=await Promise.all([getCategoriesAction()])
+  const session = await auth.api.getSession({
+          headers : await headers()
+      })
+
+       if (session === null) return null;
+
+  const [categories,assets]=await Promise.all([getCategoriesAction(),getUserItemAction(session?.user.id)])
+  
+  
+ 
   return (
     <div className='container py-6'>
       <div className='flex justify-between items-center mb-6'>
@@ -17,7 +28,8 @@ const DasboardItem = async() => {
       <div>
         <UploadItems categories={categories || []}/>
       </div>
-      <ItemsGrid/>
+      <ItemsGrid items={assets ?? []} />
+
     </div>
   )
 }
