@@ -37,7 +37,11 @@ const AssetApprovalPage = async() => {
               </div>
             </div>
             <div className="p-4 ">
-                  <h2 className="font-normal truncate text-lg">{item.title}</h2>
+              <div className='flex justify-between'>
+              <h2 className="font-normal truncate text-lg">{item.title}</h2>
+              <h2 className="font-normal truncate text-xl">{item.pricePerDay}</h2>
+              </div>
+                 
                   {
                     item.description && (
                       <p className="text-xs text-slate-500">{item.description}</p>

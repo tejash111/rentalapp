@@ -44,12 +44,13 @@ const Header = () => {
 
         </div>
         <nav className='flex justify-center gap-16'>
-            <Link href={'/items'} className='items-center flex justify-center w-full'>
-            <Button variant={'ghost'}><Package/>Rent Items</Button>
-            </Link>
+            
             {
               !isPending && user && !isAdminUser &&(
                 <>
+                <Link href={'/items'} className='items-center flex justify-center w-full'>
+            <Button variant={'ghost'}><Package/>Rent Items</Button>
+            </Link>
                 <Link href='/dashboards/items'>
                 <Button variant={'ghost'}><PackagePlus/> Your Assets</Button>
                 </Link>

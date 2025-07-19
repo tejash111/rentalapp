@@ -22,6 +22,27 @@
       "when": 1752852448432,
       "tag": "0002_chemical_loa",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1752954684075,
+      "tag": "0003_round_starhawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1752954862581,
+      "tag": "0004_closed_bedlam",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1752959039395,
+      "tag": "0005_acoustic_master_mold",
+      "breakpoints": true
     }
   ]
 }

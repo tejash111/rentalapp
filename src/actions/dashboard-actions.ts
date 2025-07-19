@@ -6,14 +6,16 @@ import { asset, category, user } from "@/lib/db/schema"
 import { and, eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { headers } from "next/headers"
-import {date, success, z} from "zod"
+import { z} from "zod"
 
 const ItemSchema=z.object({
     title : z.string(),
     description : z.string().optional(),
     location : z.string(),
     categoryId: z.number().positive(),
-    image : z.string()
+    image : z.string(),
+    pricePerDay : z.number(),
+    price : z.number()
 })
 
 
@@ -22,8 +24,7 @@ export const getCategoriesAction =async()=>{
         return db.select().from(category)
     } catch (error) {
         console.log(error);
-        return []
-        
+        return []  
     }
 }
 
@@ -44,6 +45,8 @@ export const uploadItemAction=async(formData : FormData)=>{
             location : formData.get('location'),
             categoryId : Number(formData.get('categoryId')),
             image : formData.get('image'),
+            pricePerDay : Number(formData.get('pricePerDay')),
+            price : Number(formData.get('price'))
         })
 
         await db.insert(asset).values({
@@ -57,7 +60,8 @@ export const uploadItemAction=async(formData : FormData)=>{
             isAvailable : true,
             availableFrom : new Date(),
             availableTo : new Date(),
-            pricePerDay : 100
+            pricePerDay : validateFields.pricePerDay,
+            price : validateFields.price
             
         })
 

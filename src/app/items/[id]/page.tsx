@@ -59,6 +59,8 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
   }
 
   const { item, categoryName, userName, userId, userImage } = result
+  console.log(item.price);
+  
 
   const isAuthor = session?.user.id === userId
 
@@ -110,7 +112,7 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
               </div>
             </div>
             <div className="text-sm text-gray-300 flex"><MapPin className=" text-gray-300 h-4 w-4 mt-1"/>{item.location}</div>
-            <div className="text-3xl ">$5.00</div>
+            <div className="text-3xl ">${item.pricePerDay}.00</div>
             <div  className="text-sm font-light text-gray-300">
               {item.description}
             </div>
@@ -122,12 +124,26 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
                 <Info className="w-4 h-4 mt-1 flex-shrink-0 text-blue-700"/>
                 <p className="text-blue-700 text-sm">This is your Item. You can't Purchase your own Item</p>
               </div> : 
+              <>
               <form action={handlePurchase} className="mb-6 ">
                 <Button  type="submit" className="w-full cursor-pointer">
                   <ShoppingCart className="mr-2 w-4 h-4"/>
                   Rent Now
                 </Button>
               </form>
+              {
+                 item.price ===230 && (
+                  <div className="">
+                    <div className="flex items-center my-4">
+  <hr className="flex-grow border-t border-gray-300" />
+  <span className="mx-4 text-gray-500">or</span>
+  <hr className="flex-grow border-t border-gray-300" />
+</div>
+                    <Button  className="w-full mb-6 ">Buy for    ${item.price}.00 </Button>
+                  </div>
+                )
+              }
+              </>
               : <>
               <Button className="w-full justify-center items-center flex mb-6 cursor-pointer">
                <Link href={'/login'}>
@@ -136,6 +152,7 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
                 
               </Button>
               </>
+              
             }
           </CardContent>
             </Card>

@@ -53,7 +53,7 @@ async function ItemContent({ searchParams }: ItemPageProps) {
   return (
     <div className='min-h-screen px-4 bg-white '>
       <div className='sticky top-0 z-30 bg-white border-b py-3 px-4'>
-        <div className='container flex overflow-x-auto gap-12 '>
+        <div className='container flex overflow-x-auto gap-5 '>
           <Button variant={!categoryId ? 'default' : 'outline'} size={'sm'}
             className={!categoryId ? 'bg-black text-white' : ''}
           >
@@ -93,7 +93,11 @@ async function ItemContent({ searchParams }: ItemPageProps) {
                     </div>
                     <div>
                       <div className="p-4 ">
-                        <h2 className="font-normal truncate text-lg">{item.title}</h2>
+                        <div className='flex justify-between'>
+                          <h2 className="font-normal truncate text-lg">{item.title}</h2>
+                          <h2 className="font-normal truncate text-xl">${item.pricePerDay}.00</h2>
+                        </div>
+                        
                         <div className="flex justify-between items-center mt-3">
                           <span className="text-xs text-slate-400">{formatDistanceToNow(new Date(item.createdAt))}</span>
                           <span className='flex border rounded-xl p-1'>

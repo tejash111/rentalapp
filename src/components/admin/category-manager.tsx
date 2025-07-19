@@ -52,6 +52,8 @@ const CategoryManager = ({categories : initialCategories} :CategoryManagerProps)
     }
 
     const handleDeleteCategory= async(categoryId : number)=>{
+        console.log('error');
+        
         const result = await deleteCategoryAction(categoryId)
 
         if (result.success){

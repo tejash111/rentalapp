@@ -39,7 +39,7 @@ const OrdersPage = async () => {
    <div className="container p-8">
     <h1 className="text-3xl">My Orders</h1>
     {
-      purchases.length !== 0 ? 
+      purchases.length === 0 ? 
       <Card className="h-40 mt-4 shadow-sm hover:shadow-lg">
         <p className="flex justify-center items-center text-lg font-normal h-full">You haven't Purchased any Item</p>
       </Card>
@@ -47,13 +47,39 @@ const OrdersPage = async () => {
       <div className="mt-4 space-y-4 ">
         {
           purchases.map(({purchase,asset})=>(
-            <div key={purchase.id} className="">
-              <Card>
-                <div><Image
-                src={asset.image}
-                alt={asset.title}
-                fill
-                /></div>
+            <div key={purchase.id} className="max-2-4">
+              <Card className="mt-4 shadow-sm hover:shadow-lg p-6">
+                <div className="flex  justify-between w-full">
+                 
+                  <div className="flex gap-25 min-w-0">
+                    <div className="flex-shrink-0 overflow-hidden rounded">
+                      <Image
+                        src={asset.image}
+                        alt={asset.title}
+                        width={140}
+                        height={140}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="text-2xl font-normal">
+                      {asset.title}
+                    </div>
+                  </div>
+                  {/* Middle: Price */}
+                  <div className="text-xl font-semibold mx-8 whitespace-nowrap">
+                    ₹{(purchase.price / 100).toLocaleString()}
+                  </div>
+                  {/* Right: Delivery Status */}
+                  <div className="flex flex-col mr-25">
+                    <div className="flex items-center gap-2">
+                      <span className="h-3 w-3 rounded-full bg-green-600 inline-block"></span>
+                      <span className="font-semibold">
+                        Ordered on {new Date(purchase.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <span className="text-gray-500 text-sm">Your item will be delivered in an hour</span>
+                  </div>
+                </div>
               </Card>
             </div>
           ))

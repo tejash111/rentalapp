@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, integer ,serial, uuid} from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, integer ,serial, uuid ,numeric} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text('id').primaryKey(),
@@ -70,13 +70,14 @@ export const  asset = pgTable('asset',{
 	location:text('location'),
 	isApproved:text('is_approved').default('pending').notNull(),
 	userId : text('user_id').notNull().references(()=>user.id ,{onDelete:'cascade'}),
-	categoryId:integer('category_id').references(()=>category.id),
+	categoryId:integer('category_id').references(()=>category.id,{onDelete : 'cascade'}),
 	createdAt: timestamp("created_at").$defaultFn(() => new Date()).notNull(),
 	updatedAt: timestamp("updated_at").$defaultFn(() => new Date()).notNull(),
 	isAvailable: boolean("is_available").$defaultFn(() => true),
 	availableFrom: timestamp("available_from"),
 	availableTo: timestamp("available_to"),
-	pricePerDay: integer("price_per_day").notNull(),
+	pricePerDay:numeric("price_per_day").notNull(),
+	price : numeric('price')
 })
 
 export const payment = pgTable('payment', {
@@ -92,7 +93,7 @@ export const payment = pgTable('payment', {
 
 export const purchase=pgTable('purchase', {
 	id : uuid('id').defaultRandom().primaryKey(),
-	assetId : uuid('asset_id').notNull().references(()=>asset.id, {onDelete : 'restrict'}),
+	assetId : uuid('asset_id').notNull().references(()=>asset.id, {onDelete : 'cascade'}),
 	userId : text('user_id').notNull().references(()=>user.id, {onDelete : 'cascade'}),
 	paymentId : uuid('payment_id').notNull().references(()=>payment.id),
 	price : integer('price').notNull(),
