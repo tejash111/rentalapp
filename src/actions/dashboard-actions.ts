@@ -117,7 +117,7 @@ export async function getPublicItemAction(categoryId? : number) {
     }
 }
 
-export async function getAssetByIdAction(assetId: string) {
+export async function getItemByIdAction(assetId: string) {
     try {
         const [result] = await db.select({
             item : asset,

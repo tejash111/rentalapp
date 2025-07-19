@@ -53,25 +53,7 @@ export const verification = pgTable("verification", {
 });
 
 //asset management tables
-export const payment = pgTable('payment', {
-	id : uuid('id').defaultRandom().primaryKey(),
-	amount : integer('amount').notNull(),
-	currency : text('currency').default('USD'),
-	status : text('status').notNull(),
-	provider : text('provider').notNull(),
-	providerId : text('provider_Id'),
-	userId : text('user_id').notNull().references(()=>user.id),
-	createdAt: timestamp('created_at').$defaultFn(() => new Date()).notNull()
-})
 
-export const purchase=pgTable('purchase', {
-	id : uuid('id').defaultRandom().primaryKey(),
-	assetId : uuid('asset_id').notNull().references(()=>asset.id, {onDelete : 'restrict'}),
-	userId : text('user_id').notNull().references(()=>user.id, {onDelete : 'cascade'}),
-	paymentId : uuid('payment_id').notNull().references(()=>payment.id),
-	price : integer('price').notNull(),
-	createdAt: timestamp('created_at').$defaultFn(() => new Date()).notNull()
-})
 
 export const category = pgTable("category", {
   id: serial("id").primaryKey(),
@@ -97,11 +79,46 @@ export const  asset = pgTable('asset',{
 	pricePerDay: integer("price_per_day").notNull(),
 })
 
+export const payment = pgTable('payment', {
+	id : uuid('id').defaultRandom().primaryKey(),
+	amount : integer('amount').notNull(),
+	currency : text('currency').default('USD').notNull(),
+	status : text('status').notNull(),
+	provider : text('provider').notNull(),
+	providerId : text('provider_Id'),
+	userId : text('user_id').notNull().references(()=>user.id),
+	createdAt: timestamp('created_at').$defaultFn(() => new Date()).notNull()
+})
+
+export const purchase=pgTable('purchase', {
+	id : uuid('id').defaultRandom().primaryKey(),
+	assetId : uuid('asset_id').notNull().references(()=>asset.id, {onDelete : 'restrict'}),
+	userId : text('user_id').notNull().references(()=>user.id, {onDelete : 'cascade'}),
+	paymentId : uuid('payment_id').notNull().references(()=>payment.id),
+	price : integer('price').notNull(),
+	createdAt: timestamp('created_at').$defaultFn(() => new Date()).notNull()
+})
+
+export const invoice = pgTable('invoice',{
+	id :uuid('id').defaultRandom().primaryKey(),
+	invoiceNumeber : text('invoice_numeber').notNull().unique(),
+	purchaseId : uuid('purchase_id').notNull().references(()=>purchase.id,{onDelete : 'cascade'}),
+	userId : text('user_id').notNull().references(()=>user.id, {onDelete : 'cascade'}),
+	amount : integer('amount').notNull(),
+	currency : text('currency').default('USD').notNull(),
+	status : text('status').notNull(),
+	htmlContent : text('html_content'),
+	createdAt: timestamp('created_at').$defaultFn(() => new Date()),
+	updatedAt: timestamp('updated_at').$defaultFn(() => new Date())
+
+})
+
 export const userReleations=relations(user,({many})=>({
 	sessions : many(session),
 	accounts :many(account),
-	assets : many(asset)
-
+	assets : many(asset),
+	payments : many(payment),
+	purchases : many(purchase)
 }))
 
 export const sesssionReleations=relations(session,({one})=>({
@@ -132,8 +149,41 @@ export const assetReleations=relations(asset,({one,many})=>({
 	category:one(category,{
 		fields:[asset.categoryId],
 		references:[category.id]
+	}),
+	purchases : many(purchase)
+}))
+
+export const paymentReleations = relations(payment, ({one,many})=>({
+	user : one(user,{
+		fields : [payment.userId],
+		references : [user.id]
+	}),
+	purchases : many(purchase)
+}))
+
+export const purchaseReleations = relations(purchase, ({one})=>({
+	asset : one(asset,{
+		fields : [purchase.assetId],
+		references : [asset.id]
+	}),
+	user : one(user,{
+		fields : [purchase.userId],
+		references : [user.id]
+	}),
+	payment : one(payment,{
+		fields : [purchase.paymentId],
+		references : [payment.id]
 	})
 }))
 
-
+export const invoiceReleations = relations(invoice, ({one})=>({
+	purchase : one(purchase,{
+		fields : [invoice.purchaseId],
+		references : [purchase.id]
+	}),
+	user : one(user,{
+		fields : [invoice.userId],
+		references : [user.id]
+	})
+}))
 

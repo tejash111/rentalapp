@@ -15,6 +15,13 @@
       "when": 1752565344652,
       "tag": "0001_fixed_mimic",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752852448432,
+      "tag": "0002_chemical_loa",
+      "breakpoints": true
     }
   ]
 }
