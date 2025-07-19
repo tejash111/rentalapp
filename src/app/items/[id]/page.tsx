@@ -51,8 +51,8 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
   if (session && session?.user?.role === 'admin') {
     redirect('/')
   }
-
-  const result = await getItemByIdAction(params?.id)
+  const param = await params
+  const result = await getItemByIdAction(param?.id)
 
   if (!result) {
     notFound()
@@ -65,7 +65,7 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
   const handlePurchase = async()=>{
     "use server"
 
-    const result = await createPaypalOrderAction(params.id)
+    const result = await createPaypalOrderAction(param.id)
     if (result?.approvalLink){
       redirect(result.approvalLink)
     }

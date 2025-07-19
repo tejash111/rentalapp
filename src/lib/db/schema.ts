@@ -101,7 +101,7 @@ export const purchase=pgTable('purchase', {
 
 export const invoice = pgTable('invoice',{
 	id :uuid('id').defaultRandom().primaryKey(),
-	invoiceNumeber : text('invoice_numeber').notNull().unique(),
+	invoiceNumber : text('invoice_numeber').notNull().unique(),
 	purchaseId : uuid('purchase_id').notNull().references(()=>purchase.id,{onDelete : 'cascade'}),
 	userId : text('user_id').notNull().references(()=>user.id, {onDelete : 'cascade'}),
 	amount : integer('amount').notNull(),

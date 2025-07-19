@@ -4,11 +4,11 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 
-const GET=async(request : NextRequest)=>{
+export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const token=searchParams.get('token')
     const assetId = searchParams.get('assetId')
-    const payerId = searchParams.get('PayerId')
+    const payerId = searchParams.get('PayerID')
 
     //do it later : if something missing redired to items page with missing params ? missing-parmas4
     if (!token || !payerId || !assetId){

@@ -45,7 +45,8 @@ const ItemsPage = async ({ searchParams }: ItemPageProps) => {
 export default ItemsPage
 
 async function ItemContent({ searchParams }: ItemPageProps) {
-  const categoryId = searchParams.category ? Number.parseInt(searchParams.category) : undefined
+  const params = await searchParams
+  const categoryId = params.category ? Number.parseInt(params.category) : undefined
 
   const categories = await getCategoriesAction()
   const items = await getPublicItemAction(categoryId)

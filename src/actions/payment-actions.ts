@@ -9,6 +9,7 @@ import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 import { success } from "zod"
+import { createInvoiceAction, getUsersInvoicesAction } from "./invoice-actions"
 
 export async function createPaypalOrderAction(assetId:string) {
     const session = await auth.api.getSession({
@@ -109,6 +110,11 @@ export async function recordPurchaseAction(assetId : string,paypalOrderId : stri
           })
 
           //create invoice
+          const invoiceResult= await createInvoiceAction(purchaseUuid)
+          if (!invoiceResult.success){
+            console.error('Failed to create invoice');
+            
+          }
           
           revalidatePath(`items/${assetId}`)
           revalidatePath(`/dashboard/orders`)
@@ -155,7 +161,8 @@ export async function getAllUserPurchasedItemAction(){
     
         if (!session?.user.id){
             redirect('/login')
-        }
+        }        
+        
 
         try {
             const userPurchases = await db.select({
