@@ -17,7 +17,7 @@ const SettingsPage = async() => {
     <div className='container py-10'>
       <h1 className='text-3xl font-normal mt-10 px-5'>Admin Settings</h1>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mb-7'>
-        <Card className='m-5'> 
+        <Card className='m-5 text-white bg-gradient-to-r from-gray-900 to-gray-800'> 
           <CardHeader className='pb-2'>
             <CardTitle className='flex items-center text-lg font-normal gap-2'>
               <Users/>
@@ -30,7 +30,7 @@ const SettingsPage = async() => {
             </CardContent>
             </Card>
 
-            <Card className='m-5'>
+            <Card className='m-5 text-white bg-gradient-to-r from-gray-900 to-gray-800'>
            <CardHeader className='pb-2'>
             <CardTitle className='flex items-center text-lg font-normal gap-2'>
               <Package/>

@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { asset, category, user } from "@/lib/db/schema"
 import { and, eq } from "drizzle-orm"
+import { numeric } from "drizzle-orm/pg-core"
 import { revalidatePath } from "next/cache"
 import { headers } from "next/headers"
 import { z} from "zod"
@@ -14,8 +15,8 @@ const ItemSchema=z.object({
     location : z.string(),
     categoryId: z.number().positive(),
     image : z.string(),
-    pricePerDay : z.number(),
-    price : z.number()
+    pricePerDay: z.number(),
+    price: z.number()
 })
 
 
@@ -27,6 +28,8 @@ export const getCategoriesAction =async()=>{
         return []  
     }
 }
+
+
 
 export const uploadItemAction=async(formData : FormData)=>{
 

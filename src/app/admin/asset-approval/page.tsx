@@ -10,28 +10,27 @@ import Image from 'next/image'
 import React from 'react'
 
 const AssetApprovalPage = async() => {
-
   const pendingItems =await getPendingItemAction()
 
   return  (
     <div className=' mt-25 px-8'>
       {
         pendingItems.length === 0 ? (
-      <Card className='bg-white '>
+      <Card className='text-white bg-gradient-to-r from-gray-900 to-gray-800'>
         <CardContent className='py-16 flex flex-col items-center justify-center'>
-          <p className='text-center text-slate-600 text-lg'>All Item Have been Reviewed</p>
+          <p className='text-center text-slate-100 text-lg'>All Item Have been Reviewed</p>
         </CardContent>
       </Card>
   ) :  <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
       {
         pendingItems.map(({item,userName})=>(
-          <div key={item.id} className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow ">
-            <div className="h-48 bg-slate-100 relative">
+          <div key={item.id} className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow text-white bg-gradient-to-r from-gray-900 to-gray-800">
+            <div className="h-48 bg-slate-100 relative text-white bg-gradient-to-r from-gray-900 to-gray-800">
               <Image
               src={item.image}
               alt={item.title}
               fill
-              className="object-cover "
+              className="object-cover rounded-b-xl "
               />
               <div className="absolute top-2 right-2 ">
               </div>
@@ -39,7 +38,7 @@ const AssetApprovalPage = async() => {
             <div className="p-4 ">
               <div className='flex justify-between'>
               <h2 className="font-normal truncate text-lg">{item.title}</h2>
-              <h2 className="font-normal truncate text-xl">{item.pricePerDay}</h2>
+              <h2 className="font-normal truncate text-xl">₹{item.pricePerDay}</h2>
               </div>
                  
                   {

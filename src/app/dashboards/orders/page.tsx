@@ -48,16 +48,16 @@ const OrdersPage = async () => {
         {
           purchases.map(({purchase,asset})=>(
             <div key={purchase.id} className="max-2-4">
-              <Card className="mt-4 shadow-sm hover:shadow-lg p-6">
+              <Card className="mt-4 shadow-sm hover:shadow-lg p-4">
                 <div className="flex  justify-between w-full">
                  
-                  <div className="flex gap-25 min-w-0">
+                  <div className="flex gap-25 min-w-0 h-25">
                     <div className="flex-shrink-0 overflow-hidden rounded">
                       <Image
                         src={asset.image}
                         alt={asset.title}
-                        width={140}
-                        height={140}
+                        width={90}
+                        height={90}
                         className="object-cover"
                       />
                     </div>
@@ -67,7 +67,7 @@ const OrdersPage = async () => {
                   </div>
                   {/* Middle: Price */}
                   <div className="text-xl font-semibold mx-8 whitespace-nowrap">
-                    ₹{(purchase.price / 100).toLocaleString()}
+                    ₹{(purchase.price).toLocaleString()}
                   </div>
                   {/* Right: Delivery Status */}
                   <div className="flex flex-col mr-25">

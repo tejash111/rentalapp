@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, integer ,serial, uuid ,numeric} from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, integer ,serial, uuid ,numeric, decimal} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text('id').primaryKey(),
@@ -76,8 +76,8 @@ export const  asset = pgTable('asset',{
 	isAvailable: boolean("is_available").$defaultFn(() => true),
 	availableFrom: timestamp("available_from"),
 	availableTo: timestamp("available_to"),
-	pricePerDay:numeric("price_per_day").notNull(),
-	price : numeric('price')
+	pricePerDay:integer("price_per_day"),
+	price : integer('price')
 })
 
 export const payment = pgTable('payment', {

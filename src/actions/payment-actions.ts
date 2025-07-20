@@ -25,7 +25,6 @@ export async function createPaypalOrderAction(assetId:string) {
     if (!getAsset){
         throw new Error('Asset not found')
     }
-
     // const existingPurchase = await db.select().from(purchase)
     // .where(and(eq(purchase.assetId,assetId), eq(purchase.userId,session.user.id))).limit(1);
 
@@ -50,7 +49,7 @@ export async function createPaypalOrderAction(assetId:string) {
                         description : `Purchase of ${getAsset.title}`,
                         amount : {
                             currency_code : 'USD',
-                            value : '5.00'
+                            value : (getAsset.pricePerDay ? (getAsset.pricePerDay / 86).toFixed(2) : "0.00")
                         },
                         custom_id : `${session.user.id}|${assetId}`
                     }
@@ -79,9 +78,12 @@ export async function createPaypalOrderAction(assetId:string) {
     }
 }
 
-export async function recordPurchaseAction(assetId : string,paypalOrderId : string,userId:string,price=5.0) {
+export async function recordPurchaseAction(assetId : string,paypalOrderId : string,userId:string,pricePerDay:number | null) {
    
-   
+    if (pricePerDay == null) {
+        throw new Error("pricePerDay is required to record a purchase");
+      }
+
     try {
          const existingPurchase = await db.select().from(purchase)
           .where(and(eq(purchase.assetId,assetId), eq(purchase.userId,userId))).limit(1);
@@ -91,7 +93,7 @@ export async function recordPurchaseAction(assetId : string,paypalOrderId : stri
 
           await db.insert(payment).values({
             id : paymentUuid,
-            amount : Math.round(price*100),
+            amount : pricePerDay,
             currency : 'USD',
             status : 'completed',
             provider : 'paypal',
@@ -105,7 +107,7 @@ export async function recordPurchaseAction(assetId : string,paypalOrderId : stri
             assetId,
             userId,
             paymentId : paymentUuid,
-            price : Math.round(price * 100),
+            price : pricePerDay,
             createdAt : new Date() 
           })
 

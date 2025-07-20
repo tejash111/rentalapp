@@ -1,5 +1,8 @@
 import { recordPurchaseAction } from "@/actions/payment-actions";
 import { auth } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { asset } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -35,8 +38,12 @@ export async function GET(request: NextRequest) {
         const data = await response.json()
 
         if (data.status==='COMPLETED'){
+
+            const [assetTable]= await db.select().from(asset).where(eq(asset.id,assetId))
+
+
             //stroe the purchase info in db
-            const savetoDB = await recordPurchaseAction(assetId,token,session.user.id,5.0)
+            const savetoDB = await recordPurchaseAction(assetId,token,session.user.id,assetTable.pricePerDay)
             if (!savetoDB.success){
                 return NextResponse.redirect(new URL(`/items/${assetId}?error=recording_failed`,request.url))
             }else{

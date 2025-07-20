@@ -19,6 +19,11 @@ const Header = () => {
     const user = session?.user;
     const isAdminUser = user?.role==='admin'
 
+    const isItemPage  : boolean = pathname === '/items';
+    const isAsset  : boolean = pathname === '/dashboards/items';
+    const isOrders : boolean = pathname === '/dashboards/orders'
+    
+
     const handleLogout =async()=>{
       await signOut({
         fetchOptions : {
@@ -49,13 +54,13 @@ const Header = () => {
               !isPending && user && !isAdminUser &&(
                 <>
                 <Link href={'/items'} className='items-center flex justify-center w-full'>
-            <Button variant={'ghost'}><Package/>Rent Items</Button>
+            <Button className='cursor-pointer' variant={isItemPage?'default' : 'ghost'}><Package/>Rent Items</Button>
             </Link>
                 <Link href='/dashboards/items'>
-                <Button variant={'ghost'}><PackagePlus/> Your Assets</Button>
+                <Button variant={isAsset?'default' : 'ghost'} className='cursor-pointer'><PackagePlus/> Your Assets</Button>
                 </Link>
                 <Link href='/dashboards/orders'>
-                <Button variant={'ghost'}><PackageCheckIcon/> Orders</Button>
+                <Button className='cursor-pointer' variant={isOrders?'default' : 'ghost'}><PackageCheckIcon/> Orders</Button>
                 </Link>
                 </>
               )

@@ -16,7 +16,8 @@ type Item = {
   isAvailable: boolean | null;
   availableFrom: Date | null;
   availableTo: Date | null;
-  pricePerDay: number;
+  pricePerDay: number | null;
+  price : number | null;
 }
 
 
@@ -30,12 +31,12 @@ const ItemsGrid = ({items} : ItemGridProps) => {
       {
         items.map(item=>(
           <div key={item.id} className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow ">
-            <div className="h-48 bg-slate-100 relative">
+            <div className="h-48 bg-slate-100 relative text-white bg-gradient-to-r from-gray-900 to-gray-800">
               <Image
               src={item.image}
               alt={item.title}
               fill
-              className="object-cover "
+              className="object-cover rounded-b-xl "
               />
               <div className="absolute top-2 right-2 ">
                 <Badge className={ 
@@ -50,8 +51,11 @@ const ItemsGrid = ({items} : ItemGridProps) => {
                 </Badge>
               </div>
             </div>
-            <div className="p-4 ">
+            <div className="p-4 text-white bg-gradient-to-r from-gray-900 to-gray-800">
+                  <div className="flex justify-between">
                   <h2 className="font-normal truncate text-lg">{item.title}</h2>
+                  <h2 className="font-normal truncate text-xl">₹{item.pricePerDay}</h2>
+                  </div>
                   {
                     item.description && (
                       <p className="text-xs text-slate-500">{item.description}</p>

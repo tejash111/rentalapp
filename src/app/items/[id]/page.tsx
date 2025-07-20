@@ -70,6 +70,7 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
     const result = await createPaypalOrderAction(param.id)
     if (result?.approvalLink){
       redirect(result.approvalLink)
+      redirect('/dashboards/orders')
     }
   }
 
@@ -112,7 +113,7 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
               </div>
             </div>
             <div className="text-sm text-gray-300 flex"><MapPin className=" text-gray-300 h-4 w-4 mt-1"/>{item.location}</div>
-            <div className="text-3xl ">${item.pricePerDay}.00</div>
+            <div className="text-3xl ">₹{item.pricePerDay}</div>
             <div  className="text-sm font-light text-gray-300">
               {item.description}
             </div>
@@ -132,14 +133,14 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
                 </Button>
               </form>
               {
-                 item.price ===230 && (
+                 item.price !==0 && (
                   <div className="">
                     <div className="flex items-center my-4">
-  <hr className="flex-grow border-t border-gray-300" />
+          <hr className="flex-grow border-t border-gray-300" />
   <span className="mx-4 text-gray-500">or</span>
   <hr className="flex-grow border-t border-gray-300" />
 </div>
-                    <Button  className="w-full mb-6 ">Buy for    ${item.price}.00 </Button>
+                    <Button  className="w-full mb-6 cursor-pointer">Buy for ₹{item.price} </Button>
                   </div>
                 )
               }

@@ -28,7 +28,7 @@ const DasboardItem = async() => {
       <div>
         <UploadItems categories={categories || []}/>
       </div>
-      <ItemsGrid items={assets ?? []} />
+      <ItemsGrid items={assets ??  []} />
 
     </div>
   )

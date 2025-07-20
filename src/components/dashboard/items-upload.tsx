@@ -50,7 +50,7 @@ const UploadItems = ({ categories }: UploadDialogProps) => {
         categoryId: null,
         image: null,
         price: 0,
-        pricePerDay: 0
+        pricePerDay: 0,
 
     })
 
@@ -58,7 +58,7 @@ const UploadItems = ({ categories }: UploadDialogProps) => {
         const { name, value } = e.target;
         setFormState(prev => ({
             ...prev,
-            [name]: (name === "price" || name === "pricePerDay") ? Number(value) : value
+            [name] : value
         }));
     };
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +136,10 @@ const UploadItems = ({ categories }: UploadDialogProps) => {
             formData.append('location', formState.location)
             formData.append('description', formState.description)
             formData.append('image', cloudinaryResponse.secure_url)
+            formData.append('pricePerDay', String(formState.pricePerDay))
+            formData.append('price',String(formState.price))
+            console.log(formData);
+            
 
             //uplaod this to db
             const result = await uploadItemAction(formData);
@@ -197,7 +201,6 @@ const UploadItems = ({ categories }: UploadDialogProps) => {
                         <Label >Price Per Day</Label>
                         <Input
                             type="number"
-                           
                             onChange={handleInputChange}
                             value={formState.pricePerDay}
                             id="pricePerDay"

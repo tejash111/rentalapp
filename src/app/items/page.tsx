@@ -28,7 +28,7 @@ const ItemsPage = async ({ searchParams }: ItemPageProps) => {
 
 
   return (
-    <div className='mt-13 p-4'>
+    <div className='mt-13 p-4 bg-gradient-to-b from-white via-blue-100 to-white '>
       <Suspense
         fallback={
           <div className='flex items-center justify-center min-h-[65vh]'>
@@ -51,7 +51,7 @@ async function ItemContent({ searchParams }: ItemPageProps) {
   const categories = await getCategoriesAction()
   const items = await getPublicItemAction(categoryId)
   return (
-    <div className='min-h-screen px-4 bg-white '>
+    <div className='min-h-screen px-4   bg-gradient-to-b from-white via-blue-100 to-white'>
       <div className='sticky top-0 z-30 bg-white border-b py-3 px-4'>
         <div className='container flex overflow-x-auto gap-5 '>
           <Button variant={!categoryId ? 'default' : 'outline'} size={'sm'}
@@ -82,8 +82,8 @@ async function ItemContent({ searchParams }: ItemPageProps) {
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
               {
                 items.map(({ item, categoryName, userName, userImage }) => (
-                  <Link href={`/items/${item.id}`} key={item.id} className='block border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow'>
-                    <div className='group relative overflow-hidden rounded-lg aspect-square'>
+                  <Link href={`/items/${item.id}`} key={item.id} className='block border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow text-white bg-gradient-to-r from-gray-900 to-gray-800'>
+                    <div className='group relative overflow-hidden rounded-lg aspect-square '>
                       <Image
                         src={item.image}
                         alt={item.title}
@@ -91,16 +91,16 @@ async function ItemContent({ searchParams }: ItemPageProps) {
                         className='object-cover transition-transform duration-500 group-hover:scale-105'
                       />
                     </div>
-                    <div>
+                    <div className=''>
                       <div className="p-4 ">
                         <div className='flex justify-between'>
                           <h2 className="font-normal truncate text-lg">{item.title}</h2>
-                          <h2 className="font-normal truncate text-xl">${item.pricePerDay}.00</h2>
+                          <h2 className="font-normal truncate text-xl">₹{item.pricePerDay}</h2>
                         </div>
                         
                         <div className="flex justify-between items-center mt-3">
                           <span className="text-xs text-slate-400">{formatDistanceToNow(new Date(item.createdAt))}</span>
-                          <span className='flex border rounded-xl p-1'>
+                          <span className='flex  shadow-black shadow-sm rounded-xl p-1'>
                             {userImage && userName && (
                            <img
                             className="w-4 h-4 rounded-full text-xs"
@@ -108,7 +108,7 @@ async function ItemContent({ searchParams }: ItemPageProps) {
                             alt={userName}
                              />
                              )}
-                            <span className='text-xs text-gray-500'>{userName}</span></span>
+                            <span className='text-xs text-gray-400'>{userName}</span></span>
                         </div>
                       </div>
                     </div>
