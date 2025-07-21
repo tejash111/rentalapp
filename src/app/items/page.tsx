@@ -1,5 +1,3 @@
-
-
 import { getCategoriesAction, getPublicItemAction } from '@/actions/dashboard-actions'
 import { Button } from '@/components/ui/button'
 import { auth } from '@/lib/auth'
@@ -12,9 +10,9 @@ import { redirect } from 'next/navigation'
 import React, { Suspense } from 'react'
 
 interface ItemPageProps {
-  searchParams: {
+  searchParams: Promise<{  
     category?: string;
-  }
+  }>
 }
 
 const ItemsPage = async ({ searchParams }: ItemPageProps) => {
@@ -45,8 +43,9 @@ const ItemsPage = async ({ searchParams }: ItemPageProps) => {
 export default ItemsPage
 
 async function ItemContent({ searchParams }: ItemPageProps) {
-  const params = await searchParams
-  const categoryId = params.category ? Number.parseInt(params.category) : undefined
+
+  const resolvedSearchParams = await searchParams
+  const categoryId = resolvedSearchParams.category ? Number.parseInt(resolvedSearchParams.category) : undefined  
 
   const categories = await getCategoriesAction()
   const items = await getPublicItemAction(categoryId)
