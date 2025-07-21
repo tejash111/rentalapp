@@ -47,7 +47,8 @@ export async function GET(request: NextRequest) {
             if (!savetoDB.success){
                 return NextResponse.redirect(new URL(`/items/${assetId}?error=recording_failed`,request.url))
             }else{
-                return NextResponse.redirect(new URL(`/items/${assetId}?success=true`,request.url))
+                // return NextResponse.redirect(new URL(`/items/${assetId}?success=true`,request.url))
+                return NextResponse.redirect(new URL(`/dashboards/orders`,request.url))
             }
         }else{
             return NextResponse.redirect(new URL(`/items/${assetId}?error=payment_failed`,request.url))

@@ -176,7 +176,7 @@ const UploadItems = ({ categories }: UploadDialogProps) => {
 
         <Dialog open={open} onOpenChange={setOpen} >
             <DialogTrigger asChild>
-                <Button variant={'outline'} className='w-full'><Plus className=' w-4 h-4' /> Add Item</Button>
+                <Button  className='w-full'><Plus className=' w-4 h-4' /> Add Item</Button>
             </DialogTrigger>
             <DialogContent className='sm:max-w-[600px] overflow-y-auto max-h-[90vh] ' >
                 <DialogHeader>

@@ -20,12 +20,12 @@ const DasboardItem = async() => {
   
  
   return (
-    <div className='container p-6 bg-gradient-to-b from-white via-blue-100 to-white'>
-      <div className='flex justify-between items-center mb-6'>
+    <div className=' container p-6 bg-gradient-to-b from-white via-blue-100 to-white'>
+      <div className='flex justify-between items-center mb-6 mt-4 p-4'>
         <h1 className='text-3xl font-medium '>My Items For : Rent</h1>
         
       </div>
-      <div>
+      <div className='px-4'>
         <UploadItems categories={categories || []}/>
       </div>
       <ItemsGrid items={assets ??  []} />
