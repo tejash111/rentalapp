@@ -79,7 +79,7 @@ async function ItemContent({ searchParams }: ItemPageProps) {
       <div className='container py-12'>
         {
           items.length === 0 ? <p className='text-2xl text-center'>No Items Added For Rent</p> :
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
+            <div className='grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 gap-2'>
               {
                 items.map(({ item, categoryName, userName, userImage }) => (
                   <Link href={`/items/${item.id}`} key={item.id} className='block border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow text-white bg-gradient-to-r from-gray-900 to-gray-800'>
@@ -98,9 +98,9 @@ async function ItemContent({ searchParams }: ItemPageProps) {
                           <h2 className="font-normal truncate text-xl">₹{item.pricePerDay}</h2>
                         </div>
                         
-                        <div className="flex justify-between items-center mt-3">
-                          <span className="text-xs text-slate-400">{formatDistanceToNow(new Date(item.createdAt))}</span>
-                          <span className='flex  shadow-black shadow-sm rounded-xl p-1'>
+                        <div className="md:flex justify-between items-center mt-3 ">
+                          <span className="text-xs text-slate-400 ">{formatDistanceToNow(new Date(item.createdAt))}</span>
+                          <span className='flex mt-2 md:mt-0  shadow-black shadow-sm rounded-xl p-1'>
                             {userImage && userName && (
                            <img
                             className="w-4 h-4 rounded-full text-xs"
@@ -108,7 +108,7 @@ async function ItemContent({ searchParams }: ItemPageProps) {
                             alt={userName}
                              />
                              )}
-                            <span className='text-xs text-gray-400'>{userName}</span></span>
+                            <span className='text-xs text-gray-400 oveflow-hidden truncate'>{userName}</span></span>
                         </div>
                       </div>
                     </div>

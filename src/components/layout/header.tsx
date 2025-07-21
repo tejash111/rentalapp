@@ -39,28 +39,24 @@ const Header = () => {
         return null;
     }
   return (
-    <header className='fixed top-0 right-0 left-0 z-50 border-b bg-white flex'>
-      <Link href={'/'} className=' items-center  ml-10 flex'>
+    <header className='fixed top-0 right-0 left-0 z-50  md:z-50 border-b bg-white flex '>
+      <Link href={'/'} className=' items-center ml-4 md:items-center items-center md:ml-10 flex'>
             <img src="/logo.png" alt="" className='w-50'/>
           </Link>
       <div className='container flex h-16 items-center  px-4 justify-center'>
-        <div className='flex items-center '>
-          
-
-        </div>
-        <nav className='flex justify-center gap-16'>
+        <nav className='flex justify-center gap-4 md:gap-16'>
             
             {
               !isPending && user && !isAdminUser &&(
                 <>
                 <Link href={'/items'} className='items-center flex justify-center w-full'>
-            <Button className='cursor-pointer' variant={isItemPage?'default' : 'ghost'}><Package/>Rent Items</Button>
+            <Button className='cursor-pointer' variant={isItemPage?'default' : 'ghost'}><Package/><p className='hidden md:block'>Rent Items</p></Button>
             </Link>
                 <Link href='/dashboards/items'>
-                <Button variant={isAsset?'default' : 'ghost'} className='cursor-pointer'><PackagePlus/> Your Assets</Button>
+                <Button variant={isAsset?'default' : 'ghost'} className='cursor-pointer'><PackagePlus/> <p className='hidden md:block'>Your Assets</p></Button>
                 </Link>
                 <Link href='/dashboards/orders'>
-                <Button className='cursor-pointer' variant={isOrders?'default' : 'ghost'}><PackageCheckIcon/> Orders</Button>
+                <Button className='cursor-pointer' variant={isOrders?'default' : 'ghost'}><PackageCheckIcon/> <p className='hidden md:block'>Orders</p></Button>
                 </Link>
                 </>
               )

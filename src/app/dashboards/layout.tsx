@@ -17,7 +17,7 @@ const DashboardLayout = async({
     if(session && session.user.role==='admin') redirect('/admin/asset-approval')
 
   return (
-    <main className='flex-1 p-4 lg:p-6 mt-12 '>
+    <main className='flex-1  mt-12 '>
         {children}
     </main>
   )

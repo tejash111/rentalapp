@@ -25,7 +25,7 @@ interface ItemDetailsPageProps {
 
 const ItemDetailsPage = ({ params,searchParams }: ItemDetailsPageProps) => {
   return (
-    <div className='mt-20 p-4'>
+    <div className='mt-7 md:mt-20 p-4 bg-gradient-to-b from-white via-blue-100 to-white min-h-screen'>
       <Suspense
         fallback={
           <div className='flex items-center justify-center min-h-[65vh]'>
@@ -76,7 +76,7 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
 
 
   return (
-    <div className="min-h-screen container px-4 bg-white">
+    <div className="min-h-screen container px-4 bg-white bg-gradient-to-b from-white via-blue-100 to-white">
       <div className="container py-12">
         <div className="grid gap-12 md:grid-cols-2">
           <div className="md:col-span-1 space-y-8">

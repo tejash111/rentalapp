@@ -27,11 +27,13 @@ interface ItemGridProps {
 
 const ItemsGrid = ({items} : ItemGridProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10
+    
+    ">
       {
         items.map(item=>(
-          <div key={item.id} className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow ">
-            <div className="h-48 bg-slate-100 relative text-white bg-gradient-to-r from-gray-900 to-gray-800">
+          <div key={item.id} className=" rounded-lg overflow-hidden  shadow-sm hover:shadow-lg transition-shadow bg-gradient-to-r from-gray-900 to-gray-800">
+            <div className="h-48 relative text-white ">
               <Image
               src={item.image}
               alt={item.title}

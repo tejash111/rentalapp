@@ -36,11 +36,14 @@ const OrdersPage = async () => {
   invoices.forEach((inv) => purchaseToInvoiceMap.set(inv.purchaseId, inv.id))
 
   return (
-   <div className="container p-8">
+   <div className="w-full min-h-screen bg-gradient-to-b from-white via-blue-100 to-white">
+    <div className="container p-12">
+
+    
     <h1 className="text-3xl">My Orders</h1>
     {
       purchases.length === 0 ? 
-      <Card className="h-40 mt-4 shadow-sm hover:shadow-lg">
+      <Card className="h-40 mt-4 shadow-sm hover:shadow-lg text-white bg-gradient-to-r from-gray-900 to-gray-800">
         <p className="flex justify-center items-center text-lg font-normal h-full">You haven't Purchased any Item</p>
       </Card>
       :
@@ -86,6 +89,7 @@ const OrdersPage = async () => {
         }
       </div>
     }
+   </div>
    </div>
   )
 }

@@ -20,7 +20,7 @@ const DasboardItem = async() => {
   
  
   return (
-    <div className='container py-6'>
+    <div className='container p-6 bg-gradient-to-b from-white via-blue-100 to-white'>
       <div className='flex justify-between items-center mb-6'>
         <h1 className='text-3xl font-medium '>My Items For : Rent</h1>
         
