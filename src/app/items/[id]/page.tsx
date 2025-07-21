@@ -12,18 +12,18 @@ import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import { Suspense } from "react"
 
-interface ItemDetailsPageProps {
-  params: {
+interface PageProps {
+  params: Promise<{
     id: string
-  },
-  searchParams : {
-    success? :string;
-    canceled? : string;
-    error? : string;
-  }
+  }>,
+  searchParams?: Promise<{
+    success?: string;
+    canceled?: string;
+    error?: string;
+  }>
 }
 
-const ItemDetailsPage = ({ params,searchParams }: ItemDetailsPageProps) => {
+const ItemDetailsPage = async ({ params, searchParams }: PageProps) => {
   return (
     <div className='mt-7 md:mt-20 p-4 bg-gradient-to-b from-white via-blue-100 to-white min-h-screen'>
       <Suspense
@@ -42,7 +42,10 @@ const ItemDetailsPage = ({ params,searchParams }: ItemDetailsPageProps) => {
 export default ItemDetailsPage
 
 
-const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) => {
+const ItemContentPage = async ({ params, searchParams }: PageProps) => {
+  // Await the params Promise
+  const resolvedParams = await params
+  const resolvedSearchParams = searchParams ? await searchParams : undefined
 
   const session = await auth.api.getSession({
     headers: await headers()
@@ -51,8 +54,8 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
   if (session && session?.user?.role === 'admin') {
     redirect('/')
   }
-  const param = await params
-  const result = await getItemByIdAction(param?.id)
+  
+  const result = await getItemByIdAction(resolvedParams.id)
 
   if (!result) {
     notFound()
@@ -67,10 +70,9 @@ const ItemContentPage = async ({ params ,searchParams}: ItemDetailsPageProps) =>
   const handlePurchase = async()=>{
     "use server"
 
-    const result = await createPaypalOrderAction(param.id)
+    const result = await createPaypalOrderAction(resolvedParams.id)
     if (result?.approvalLink){
       redirect(result.approvalLink)
-      redirect('/dashboards/orders')
     }
   }
 
