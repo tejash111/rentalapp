@@ -45,13 +45,17 @@ const Header = () => {
           </Link>
       <div className='container flex h-16 items-center  px-4 justify-center'>
         <nav className='flex justify-center gap-4 md:gap-16'>
-            
+            {
+              !isAdminUser && (
+                <Link href={'/items'} className='items-center flex justify-center w-full'>
+                <Button className='cursor-pointer' variant={isItemPage?'default' : 'ghost'}><Package/><p className='hidden md:block'>Rent Items</p></Button>
+                </Link>
+              )
+            }
+
             {
               !isPending && user && !isAdminUser &&(
                 <>
-                <Link href={'/items'} className='items-center flex justify-center w-full'>
-            <Button className='cursor-pointer' variant={isItemPage?'default' : 'ghost'}><Package/><p className='hidden md:block'>Rent Items</p></Button>
-            </Link>
                 <Link href='/dashboards/items'>
                 <Button variant={isAsset?'default' : 'ghost'} className='cursor-pointer'><PackagePlus/> <p className='hidden md:block'>Your Assets</p></Button>
                 </Link>
