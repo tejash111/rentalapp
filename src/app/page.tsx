@@ -21,14 +21,14 @@ export default function Home() {
             <h1 className="text-gray-700 text-xl mb-4">What you are looking for?</h1>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 gap-x-5 md:gap-4 mt-8">
               <Link href={'/items?category=2'}>
-                <div className="bg-slate-200 md:px-11 md:py-4 flex items-center p-11 h-20 rounded-xl cursor-pointer hover:opacity-80">
+                <div className="bg-slate-200 md:px-11 md:py-4 flex items-center p-9 h-20 rounded-xl cursor-pointer hover:opacity-80">
                   <img src="/book.png" alt="book" />
                 </div>
                 <p className="text-xs mt-2 flex justify-center">Books & Nobel</p>
               </Link>
 
               <Link href={'/items?category=7'}>
-                <div className="bg-slate-200 md:px-9 md:py-4 flex items-center p-11 h-20 rounded-xl cursor-pointer hover:opacity-80">
+                <div className="bg-slate-200 md:px-9 md:py-4 flex items-center p-8 h-20 rounded-xl cursor-pointer hover:opacity-80">
                   <img src="/arduino.png" alt="arduino" />
                 </div>
                 <p className="text-xs mt-2 flex justify-center">Electronics Item</p>
@@ -36,14 +36,14 @@ export default function Home() {
 
 
               <Link href={'/items?category=9'}>
-                <div className="bg-slate-200 md:px-11 md:py-4 flex items-center p-11 h-20 rounded-xl cursor-pointer hover:opacity-80">
+                <div className="bg-slate-200 md:px-11 md:py-4 flex items-center p-9 h-20 rounded-xl cursor-pointer hover:opacity-80">
                   <img src="/camera.png" alt="camera" />
                 </div>
                 <p className="text-xs mt-2 flex justify-center">Camera</p>
               </Link>
 
               <Link href={'/items?category=5'} className="block md:hidden">
-                <div className="bg-slate-200 md:px-15 md:py-4 flex items-center p-11 h-20 rounded-xl cursor-pointer hover:opacity-80">
+                <div className="bg-slate-200 md:px-15 md:py-4 flex items-center p-9 h-20 rounded-xl cursor-pointer hover:opacity-80">
                   <img src="/cycle.png" alt="cycle" />
                 </div>
                 <p className="text-xs mt-2 flex justify-center">Cycle</p>
